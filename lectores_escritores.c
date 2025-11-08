@@ -96,7 +96,7 @@ void *escritorPrioridadLectores(void *arg) {
         tiempo_espera_escritores += (fin - inicio);
 
         recurso++;
-        printf(YELLOW "📝 [Escritor %d] modificó recurso -> %d\n" RESET, id, recurso);
+        printf(YELLOW " [Escritor %d] modificó recurso -> %d\n" RESET, id, recurso);
         usleep((rand() % 60 + 20) * 1000);
 
         pthread_mutex_unlock(&mtx_escritura);
