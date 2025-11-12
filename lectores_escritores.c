@@ -70,7 +70,7 @@ void *lectorPrioridadLectores(void *arg) {
         long long fin = microsegundos();
         tiempo_espera_lectores += (fin - inicio);
 
-        printf(GREEN "👀 [Lector %d] leyendo valor -> %d\n" RESET, id, recurso);
+        printf(GREEN "[Lector %d] leyendo valor -> %d\n" RESET, id, recurso);
         usleep((rand() % 40 + 10) * 1000);
 
         pthread_mutex_lock(&mtx);
@@ -96,7 +96,7 @@ void *escritorPrioridadLectores(void *arg) {
         tiempo_espera_escritores += (fin - inicio);
 
         recurso++;
-        printf(YELLOW " [Escritor %d] modificó recurso -> %d\n" RESET, id, recurso);
+        printf(YELLOW " [Escritor %d] modifico recurso -> %d\n" RESET, id, recurso);
         usleep((rand() % 60 + 20) * 1000);
 
         pthread_mutex_unlock(&mtx_escritura);
@@ -107,7 +107,7 @@ void *escritorPrioridadLectores(void *arg) {
 }
 
 void prioridadLectores() {
-    printf(CYAN "\n=== SIMULACIÓN: PRIORIDAD A LECTORES ===\n" RESET);
+    printf(CYAN "\n=== SIMULACION: PRIORIDAD A LECTORES ===\n" RESET);
     separador();
     reiniciarVariables();
 
@@ -130,9 +130,9 @@ void prioridadLectores() {
     printf(MAGENTA "\n RESULTADOS PRIORIDAD A LECTORES \n" RESET);
     printf("Lecturas totales: %ld\n", total_lecturas);
     printf("Escrituras totales: %ld\n", total_escrituras);
-    printf("Promedio espera lectores: %.2f µs\n", 
+    printf("Promedio espera lectores: %.2f microsegundos\n", 
            (double)tiempo_espera_lectores / (total_lecturas ? total_lecturas : 1));
-    printf("Promedio espera escritores: %.2f µs\n",
+    printf("Promedio espera escritores: %.2f microsegundos\n",
            (double)tiempo_espera_escritores / (total_escrituras ? total_escrituras : 1));
     separador();
 }
@@ -154,7 +154,7 @@ void *lectorPrioridadEscritores(void *arg) {
         lectores_activos++;
         pthread_mutex_unlock(&mtx);
 
-        printf(GREEN "👀 [Lector %d] leyendo valor -> %d\n" RESET, id, recurso);
+        printf(GREEN "[Lector %d] leyendo valor -> %d\n" RESET, id, recurso);
         usleep((rand() % 40 + 10) * 1000);
 
         pthread_mutex_lock(&mtx);
@@ -188,7 +188,7 @@ void *escritorPrioridadEscritores(void *arg) {
         tiempo_espera_escritores += (fin - inicio);
 
         recurso++;
-        printf(RED "📝 [Escritor %d] modificó recurso -> %d\n" RESET, id, recurso);
+        printf(RED "[Escritor %d] modifico recurso -> %d\n" RESET, id, recurso);
         usleep((rand() % 60 + 20) * 1000);
 
         pthread_mutex_lock(&mtx);
@@ -206,7 +206,7 @@ void *escritorPrioridadEscritores(void *arg) {
 }
 
 void prioridadEscritores() {
-    printf(CYAN "\n=== SIMULACIÓN: PRIORIDAD A ESCRITORES ===\n" RESET);
+    printf(CYAN "\n=== SIMULACION: PRIORIDAD A ESCRITORES ===\n" RESET);
     separador();
     reiniciarVariables();
 
@@ -226,12 +226,12 @@ void prioridadEscritores() {
     for (int i = 0; i < 3; i++) pthread_join(escritores[i], NULL);
 
     separador();
-    printf(MAGENTA "\n RESULTADOS PRIORIDAD A ESCRITORES 📊\n" RESET);
+    printf(MAGENTA "\n RESULTADOS PRIORIDAD A ESCRITORES\n" RESET);
     printf("Lecturas totales: %ld\n", total_lecturas);
     printf("Escrituras totales: %ld\n", total_escrituras);
-    printf("Promedio espera lectores: %.2f µs\n", 
+    printf("Promedio espera lectores: %.2f microsegundos\n", 
            (double)tiempo_espera_lectores / (total_lecturas ? total_lecturas : 1));
-    printf("Promedio espera escritores: %.2f µs\n",
+    printf("Promedio espera escritores: %.2f microsegundos\n",
            (double)tiempo_espera_escritores / (total_escrituras ? total_escrituras : 1));
     separador();
 }
@@ -241,19 +241,19 @@ int main() {
     int opcion;
     do {
         printf(CYAN "\n============================================\n" RESET);
-        printf("      SIMULADOR LECTORES–ESCRITORES (SO)\n");
+        printf("      SIMULADOR LECTORES / ESCRITORES   \n");
         printf("============================================\n");
-        printf("1️  Ejecutar Prioridad a Lectores\n");
-        printf("  Ejecutar Prioridad a Escritores\n");
-        printf("  Salir del Programa\n");
-        printf("Seleccione una opción: ");
+        printf("  1. Ejecutar Prioridad a Lectores\n");
+        printf("  2. Ejecutar Prioridad a Escritores\n");
+        printf("  3. Salir del Programa\n");
+        printf("    Seleccione una opcion:  ");
         scanf("%d", &opcion);
 
         switch (opcion) {
             case 1: prioridadLectores(); break;
             case 2: prioridadEscritores(); break;
-            case 3: printf(GREEN "\n Saliendo del programa. ¡BYE!\n" RESET); break;
-            default: printf(RED "\n Opción inválida. Intente de nuevo.\n" RESET);
+            case 3: printf(GREEN "\n Saliendo del programa...\n" RESET); break;
+            default: printf(RED "\n Opcion invalida. Intente de nuevo.\n" RESET);
         }
     } while (opcion != 3);
 
